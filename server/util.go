@@ -230,9 +230,14 @@ func interceptConfigs(rootViper *viper.Viper) (*tmcfg.Config, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse %s: %w", appCfgFilePath, err)
 		}
+		// TODO manual testing with config
+		if appConf.MinGasPrices == ""{
+			return nil, fmt.Errorf("MinGasPrices is empty in %s", appCfgFilePath)
+		}
 
 		config.WriteConfigFile(appCfgFilePath, appConf)
 	}
+
 
 	rootViper.SetConfigType("toml")
 	rootViper.SetConfigName("app")
